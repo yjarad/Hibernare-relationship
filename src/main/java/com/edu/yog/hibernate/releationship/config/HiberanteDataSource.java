@@ -1,37 +1,39 @@
 package com.edu.yog.hibernate.releationship.config;
 
-import javax.persistence.EntityManagerFactory;
+import java.sql.SQLException;
+
 import javax.sql.DataSource;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
-import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
-import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
-import org.springframework.transaction.PlatformTransactionManager;
 
 @Configuration
 public class HiberanteDataSource {
 
-	
+	@Autowired
+	DataSource dataSource;
+
 	@Bean
 	public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
-
+		System.out.println("it is called");
+		try {
+			System.out.println(dataSource.getConnection()+"connection");
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		System.out.println(dataSource+"dataSource");
 		HibernateJpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
 		vendorAdapter.setGenerateDdl(false);
 		LocalContainerEntityManagerFactoryBean factory = new LocalContainerEntityManagerFactoryBean();
 		factory.setJpaVendorAdapter(vendorAdapter);
-		//factory.setPackagesToScan("com.edu.yog.hibernate.releationship");
+		factory.setDataSource(dataSource);
+		factory.setPackagesToScan("com.edu.yog.hibernate.releationship");
+		System.out.println(factory+"factory");
 		return factory;
 	}
 
-	@Bean
-	public PlatformTransactionManager transactionManager(EntityManagerFactory entityManagerFactory) {
-
-		JpaTransactionManager txManager = new JpaTransactionManager();
-		txManager.setEntityManagerFactory(entityManagerFactory);
-		return txManager;
-	}
 }

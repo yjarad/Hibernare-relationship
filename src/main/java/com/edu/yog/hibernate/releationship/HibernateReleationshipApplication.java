@@ -4,14 +4,11 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration;
 
-@SpringBootApplication()
-public class HibernateReleationshipApplication{
+@SpringBootApplication(exclude = HibernateJpaAutoConfiguration.class )
+public class HibernateReleationshipApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(HibernateReleationshipApplication.class, args);
-		
-		
-	}
-	
-}
+	}	
 
+}

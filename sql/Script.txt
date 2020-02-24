@@ -1,0 +1,18 @@
+use edu;
+CREATE TABLE edu.Post(
+   id integer(20),
+   title VARCHAR(255),
+   author VARCHAR(255),
+   PRIMARY KEY(id )
+);
+
+CREATE TABLE edu.Comment(
+   id integer(20),
+   review_comment VARCHAR(255),
+   postId integer(20),
+   PRIMARY KEY(id )
+);
+
+ALTER TABLE Comment ADD FOREIGN KEY (postId)REFERENCES Post(id);
+
+ALTER TABLE Comment MODIFY postId int NOT NULL;
