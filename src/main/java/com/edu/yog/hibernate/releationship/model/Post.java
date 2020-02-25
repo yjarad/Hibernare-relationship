@@ -1,23 +1,27 @@
 package com.edu.yog.hibernate.releationship.model;
 
-import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 @Entity
+@Table(name = "Post")
 public class Post {
 	@Id
-	@GeneratedValue
-	private BigInteger id;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id")
+	private Integer id;
+	@Column(name = "title")
 	private String title;
-	private String author;
-	@OneToMany(mappedBy = "postId", cascade = CascadeType.ALL, orphanRemoval = true)
+	@OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Comment> comments = new ArrayList<Comment>();
 
 	public Post(String string) {
@@ -28,11 +32,11 @@ public class Post {
 		// TODO Auto-generated constructor stub
 	}
 
-	public BigInteger getId() {
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(BigInteger id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
@@ -44,23 +48,15 @@ public class Post {
 		this.title = title;
 	}
 
-	public String getAuthor() {
-		return author;
-	}
-
-	public void setAuthor(String author) {
-		this.author = author;
-	}
-
 	// Constructors, getters and setters removed for brevity
 
 	public void addComment(Comment comment) {
 		comments.add(comment);
-		comment.setPostId(this);
+		comment.setPost(this);
 	}
 
 	public void removeComment(Comment comment) {
 		comments.remove(comment);
-		comment.setPostId(null);
+		comment.setPost(null);
 	}
 }

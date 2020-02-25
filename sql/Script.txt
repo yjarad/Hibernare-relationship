@@ -1,18 +1,15 @@
-use edu;
-CREATE TABLE edu.Post(
-   id integer(20),
-   title VARCHAR(255),
-   author VARCHAR(255),
-   PRIMARY KEY(id )
-);
+CREATE TABLE `post` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `title` varchar(255) DEFAULT NULL,
+  `author` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci
 
-CREATE TABLE edu.Comment(
-   id integer(20),
-   review_comment VARCHAR(255),
-   postId integer(20),
-   PRIMARY KEY(id )
-);
-
-ALTER TABLE Comment ADD FOREIGN KEY (postId)REFERENCES Post(id);
-
-ALTER TABLE Comment MODIFY postId int NOT NULL;
+CREATE TABLE `comment` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `review_comment` varchar(255) DEFAULT NULL,
+  `post_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `postId` (`post_id`),
+  CONSTRAINT `comment_ibfk_1` FOREIGN KEY (`post_id`) REFERENCES `post` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci

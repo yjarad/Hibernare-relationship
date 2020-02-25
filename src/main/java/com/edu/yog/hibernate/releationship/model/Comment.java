@@ -1,22 +1,25 @@
 package com.edu.yog.hibernate.releationship.model;
 
-import java.math.BigInteger;
-
+import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
-@Entity
+@Entity(name = "comment")
+@Table(name = "comment")
 public class Comment {
+	
 	@Id
-	@GeneratedValue
-	private BigInteger id;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name="id")
+	private Integer id;
+	@Column(name = "review_comment")
 	private String comment;
-	@ManyToOne(fetch = FetchType.LAZY)
-	private Post postId;
+	@ManyToOne
+	private Post post;
 
 	public Comment() {
 		// TODO Auto-generated constructor stub
@@ -24,6 +27,14 @@ public class Comment {
 
 	public Comment(String review) {
 		this.comment = review;
+	}
+
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
 	}
 
 	public String getComment() {
@@ -34,11 +45,13 @@ public class Comment {
 		this.comment = comment;
 	}
 
-	public Post getPostId() {
-		return postId;
+	public Post getPost() {
+		return post;
 	}
 
-	public void setPostId(Post postId) {
-		this.postId = postId;
+	public void setPost(Post post) {
+		this.post = post;
 	}
+
+	
 }
